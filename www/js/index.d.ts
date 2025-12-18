@@ -35,6 +35,7 @@ interface GeolocationPosition {
 declare const device: CordovaDeviceInfo;
 declare const Connection: CordovaConnection;
 declare function onDeviceReady(): void;
+declare function setupButtonListeners(): void;
 declare function getDeviceInfo(): void;
 declare function updateStatusUI(): void;
 declare function showAlert(): void;

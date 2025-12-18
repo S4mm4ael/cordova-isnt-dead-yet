@@ -29,13 +29,17 @@
       "cordova-plugin-geolocation": {
         "GPS_REQUIRED": "true"
       },
-      "cordova-plugin-dialogs": {
-        "GPS_REQUIRED": "true"
-      }
+      "cordova-plugin-dialogs": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-battery-status": {}
     }
   },
   "dependencies": {
+    "cordova-plugin-battery-status": "2.0.3",
+    "cordova-plugin-device": "3.0.0",
     "cordova-plugin-dialogs": "2.0.2",
-    "cordova-plugin-geolocation": "5.0.0"
+    "cordova-plugin-geolocation": "5.0.0",
+    "cordova-plugin-network-information": "3.0.0"
   }
 }

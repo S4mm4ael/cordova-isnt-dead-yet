@@ -3,9 +3,51 @@ function onDeviceReady() {
     logEntry('✓ Device is ready!', 'success');
     updateStatusUI();
     getDeviceInfo();
+    setupButtonListeners();
+    setTimeout(() => {
+        const hasNotificationPlugin = !!window.navigator?.notification;
+        logEntry(`Notification plugin available: ${hasNotificationPlugin}`, 'info');
+        if (hasNotificationPlugin) {
+            logEntry(`Notification.alert type: ${typeof window.navigator.notification.alert}`, 'info');
+            logEntry(`Notification.confirm type: ${typeof window.navigator.notification.confirm}`, 'info');
+        }
+    }, 500);
     setupNetworkListener();
     setupBatteryListener();
     setInterval(refreshInfo, 30000);
+}
+function setupButtonListeners() {
+    const alertBtn = document.getElementById('alert-btn');
+    const confirmBtn = document.getElementById('confirm-btn');
+    const geoBtn = document.getElementById('geo-btn');
+    const refreshBtn = document.getElementById('refresh-btn');
+    if (alertBtn) {
+        alertBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logEntry('🔔 Alert button touched', 'info');
+            showAlert();
+        });
+    }
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logEntry('❓ Confirm button touched', 'info');
+            showConfirm();
+        });
+    }
+    if (geoBtn) {
+        geoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logEntry('📍 Location button touched', 'info');
+            getLocation();
+        });
+    }
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            refreshInfo();
+        });
+    }
 }
 function getDeviceInfo() {
     try {
@@ -37,38 +79,70 @@ function updateStatusUI() {
     }
 }
 function showAlert() {
+    logEntry('Alert button clicked', 'info');
     try {
-        if (navigator.notification) {
-            navigator.notification.alert('This is a native alert dialog!', alertDismissed, 'Welcome!', 'OK');
+        const notification = window.navigator?.notification ||
+            window.notification ||
+            window.cordova?.plugins?.notification?.local;
+        logEntry(`Notification object found: ${!!notification}`, 'info');
+        if (notification && notification.alert && typeof notification.alert === 'function') {
+            logEntry('✓ Using native Cordova notification.alert()', 'success');
+            try {
+                notification.alert('This is a native alert dialog!', () => {
+                    logEntry('✓ Alert dismissed by user', 'success');
+                }, 'Welcome!', 'OK');
+            }
+            catch (callError) {
+                logEntry(`Error calling notification.alert: ${String(callError)}`, 'error');
+                alert('Welcome to your Cordova app!');
+            }
         }
         else {
+            logEntry('Native notification unavailable, using browser alert()', 'info');
             alert('Welcome to your Cordova app!');
-            logEntry('Using standard alert', 'info');
         }
     }
     catch (error) {
-        if (error instanceof Error) {
-            logEntry(`Alert error: ${error.message}`, 'error');
-        }
+        logEntry(`Unexpected error in showAlert: ${String(error)}`, 'error');
+        alert('Welcome to your Cordova app!');
     }
 }
 function alertDismissed() {
     logEntry('Alert dismissed', 'success');
 }
 function showConfirm() {
+    logEntry('Confirm button clicked', 'info');
     try {
-        if (navigator.notification) {
-            navigator.notification.confirm('Do you like this app?', onConfirm, 'Question', ['Yes', 'No']);
+        const notification = window.navigator?.notification ||
+            window.notification ||
+            window.cordova?.plugins?.notification?.local;
+        logEntry(`Notification object found: ${!!notification}`, 'info');
+        if (notification && notification.confirm && typeof notification.confirm === 'function') {
+            logEntry('✓ Using native Cordova notification.confirm()', 'success');
+            try {
+                notification.confirm('Do you like this app?', (buttonIndex) => {
+                    const answers = ['Dismissed', 'Yes', 'No'];
+                    const answer = answers[buttonIndex] || 'Unknown';
+                    logEntry(`✓ User selected: ${answer} (${buttonIndex})`, 'success');
+                    onConfirm(buttonIndex);
+                }, 'Question', ['Yes', 'No']);
+            }
+            catch (callError) {
+                logEntry(`Error calling notification.confirm: ${String(callError)}`, 'error');
+                const result = confirm('Do you like this app?');
+                logEntry(`User answered: ${result ? 'Yes' : 'No'}`, 'info');
+            }
         }
         else {
+            logEntry('Native notification unavailable, using browser confirm()', 'info');
             const result = confirm('Do you like this app?');
             logEntry(`User answered: ${result ? 'Yes' : 'No'}`, 'info');
         }
     }
     catch (error) {
-        if (error instanceof Error) {
-            logEntry(`Confirm error: ${error.message}`, 'error');
-        }
+        logEntry(`Unexpected error in showConfirm: ${String(error)}`, 'error');
+        const result = confirm('Do you like this app?');
+        logEntry(`User answered: ${result ? 'Yes' : 'No'}`, 'info');
     }
 }
 function onConfirm(buttonIndex) {
