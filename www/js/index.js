@@ -36,26 +36,6 @@ function updateStatusUI() {
         statusEl.style.color = '#10b981';
     }
 }
-function vibrateDevice() {
-    try {
-        if (navigator.vibrate) {
-            navigator.vibrate(500);
-            logEntry('Vibrating device...', 'success');
-        }
-        else if (navigator.webkitVibrate) {
-            navigator.webkitVibrate(500);
-            logEntry('Vibrating device...', 'success');
-        }
-        else {
-            logEntry('Vibration not supported', 'info');
-        }
-    }
-    catch (error) {
-        if (error instanceof Error) {
-            logEntry(`Vibration error: ${error.message}`, 'error');
-        }
-    }
-}
 function showAlert() {
     try {
         if (navigator.notification) {

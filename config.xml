@@ -10,4 +10,11 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    
+    <!-- Android Permissions -->
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <permission name="android.permission.ACCESS_FINE_LOCATION" />
+        <permission name="android.permission.ACCESS_COARSE_LOCATION" />
+    </platform>
 </widget>

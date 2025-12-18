@@ -37,7 +37,6 @@ declare const Connection: CordovaConnection;
 declare function onDeviceReady(): void;
 declare function getDeviceInfo(): void;
 declare function updateStatusUI(): void;
-declare function vibrateDevice(): void;
 declare function showAlert(): void;
 declare function alertDismissed(): void;
 declare function showConfirm(): void;

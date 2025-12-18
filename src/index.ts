@@ -100,27 +100,6 @@ function updateStatusUI(): void {
 }
 
 /**
- * Vibrate the device
- */
-function vibrateDevice(): void {
-  try {
-    if (navigator.vibrate) {
-      navigator.vibrate(500); // Vibrate for 500ms
-      logEntry('Vibrating device...', 'success');
-    } else if ((navigator as any).webkitVibrate) {
-      (navigator as any).webkitVibrate(500);
-      logEntry('Vibrating device...', 'success');
-    } else {
-      logEntry('Vibration not supported', 'info');
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      logEntry(`Vibration error: ${error.message}`, 'error');
-    }
-  }
-}
-
-/**
  * Show alert dialog
  */
 function showAlert(): void {

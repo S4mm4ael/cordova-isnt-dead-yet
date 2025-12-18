@@ -24,6 +24,18 @@
     "platforms": [
       "ios",
       "android"
-    ]
+    ],
+    "plugins": {
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
+      },
+      "cordova-plugin-dialogs": {
+        "GPS_REQUIRED": "true"
+      }
+    }
+  },
+  "dependencies": {
+    "cordova-plugin-dialogs": "2.0.2",
+    "cordova-plugin-geolocation": "5.0.0"
   }
 }
