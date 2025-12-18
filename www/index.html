@@ -37,13 +37,102 @@
         <title>Hello World</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
+        <div class="container">
+            <!-- Header -->
+            <header class="header">
+                <h1>Welcome</h1>
+                <p id="status" class="status">Connecting to Device...</p>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Device Info Section -->
+                <section class="card">
+                    <h2 class="card-title">📱 Device Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">Platform:</span>
+                            <span id="platform" class="value">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Version:</span>
+                            <span id="version" class="value">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Model:</span>
+                            <span id="model" class="value">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">UUID:</span>
+                            <span id="uuid" class="value uuid-text">--</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Native Features Section -->
+                <section class="card">
+                    <h2 class="card-title">⚡ Native Features</h2>
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="vibrate-btn" onclick="vibrateDevice()">
+                            📳 Vibrate
+                        </button>
+                        <button class="btn btn-primary" id="alert-btn" onclick="showAlert()">
+                            🔔 Show Alert
+                        </button>
+                        <button class="btn btn-primary" id="confirm-btn" onclick="showConfirm()">
+                            ❓ Show Confirm
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Network Status Section -->
+                <section class="card">
+                    <h2 class="card-title">🌐 Network Status</h2>
+                    <div class="status-box" id="network-status">
+                        <span class="status-indicator offline"></span>
+                        <span class="status-text">Checking connection...</span>
+                    </div>
+                </section>
+
+                <!-- Battery Status Section -->
+                <section class="card">
+                    <h2 class="card-title">🔋 Battery Status</h2>
+                    <div class="battery-info">
+                        <div class="battery-bar" id="battery-bar">
+                            <div class="battery-fill" id="battery-fill"></div>
+                        </div>
+                        <p id="battery-text" class="battery-text">--</p>
+                    </div>
+                </section>
+
+                <!-- Action Buttons Section -->
+                <section class="card">
+                    <h2 class="card-title">🎯 Actions</h2>
+                    <div class="button-group">
+                        <button class="btn btn-secondary" id="geo-btn" onclick="getLocation()">
+                            📍 Get Location
+                        </button>
+                        <button class="btn btn-secondary" id="refresh-btn" onclick="refreshInfo()">
+                            🔄 Refresh Info
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Log Output -->
+                <section class="card">
+                    <h2 class="card-title">📋 Log Output</h2>
+                    <div class="log-box" id="log-output">
+                        <p class="log-entry">Ready to display logs...</p>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>Cordova Native App Demo • Powered by Apache Cordova</p>
+            </footer>
         </div>
+
         <script src="cordova.js"></script>
         <script src="js/index.js"></script>
     </body>
